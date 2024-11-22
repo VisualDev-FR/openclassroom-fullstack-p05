@@ -1,0 +1,4 @@
+backend:
+    ☐ test unitaires sur tout les services
+    ☐ test d'integration sur les controllers, on les appels puis on fait des vérif sur chaque couche de l'app
+    ☐
