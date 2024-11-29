@@ -10,8 +10,11 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { expect } from '@jest/globals';
 import { SessionService } from 'src/app/services/session.service';
 import { LoginComponent } from './login.component';
-import { throwError } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
+import { SessionInformation } from 'src/app/interfaces/sessionInformation.interface';
+import { Router } from '@angular/router';
+import { LoginRequest } from '../../interfaces/loginRequest.interface';
 
 
 describe('LoginComponent', () => {
@@ -22,6 +25,18 @@ describe('LoginComponent', () => {
   let passwordField: FormControl;
   let submitButton: HTMLInputElement;
   let authService: AuthService;
+  let sessionService: SessionService;
+  let router: Router;
+
+  const loginResponse = {
+    id: 0,
+    token: "token",
+    type: "Bearer",
+    username: "username",
+    firstName: "firstName",
+    lastName: "lastName",
+    admin: false,
+  };
 
   beforeEach(async () => {
 
@@ -40,6 +55,8 @@ describe('LoginComponent', () => {
       ]
     }).compileComponents();
 
+    router = TestBed.inject(Router);
+    sessionService = TestBed.inject(SessionService);
     authService = TestBed.inject(AuthService);
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
@@ -103,6 +120,37 @@ describe('LoginComponent', () => {
     expect(errorElement.textContent).toContain('An error occurred');
     expect(component.onError).toBeTruthy();
   });
+
+  it('should navigate to sessions on successful login', () => {
+
+    jest.spyOn(authService, 'login').mockReturnValue(of(loginResponse));
+    jest.spyOn(sessionService, 'logIn');
+    jest.spyOn(router, 'navigate').mockReturnValue(new Promise(resolve => resolve(true)));
+
+    component.form.controls['email'].setValue('test@yoga.com');
+    component.form.controls['password'].setValue('correctpass');
+
+    component.submit();
+    fixture.detectChanges();
+
+    expect(sessionService.logIn).toHaveBeenCalledWith(loginResponse);
+    expect(router.navigate).toHaveBeenCalledWith(['/sessions']);
   });
 
+  it('should call authService.login and handle successful login', () => {
+
+    jest.spyOn(authService, 'login').mockReturnValue(of(loginResponse));
+    jest.spyOn(router, 'navigate').mockReturnValue(new Promise(resolve => resolve(true)));
+
+    const loginDatas: LoginRequest = {
+      email: 'test@example.com',
+      password: 'password123',
+    };
+
+    component.form.setValue(loginDatas);
+    component.submit();
+
+    expect(authService.login).toHaveBeenCalledWith(loginDatas);
+    expect(router.navigate).toHaveBeenCalledWith(['/sessions']);
+  });
 });
