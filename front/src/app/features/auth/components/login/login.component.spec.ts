@@ -113,7 +113,7 @@ describe('LoginComponent', () => {
 
   it('should call authService.login and handle successful login', () => {
 
-    const loginResponse = {
+    const sessionInformation: SessionInformation = {
       id: 0,
       token: "token",
       type: "Bearer",
@@ -123,7 +123,7 @@ describe('LoginComponent', () => {
       admin: false,
     };
 
-    jest.spyOn(authService, 'login').mockReturnValue(of(loginResponse));
+    jest.spyOn(authService, 'login').mockReturnValue(of(sessionInformation));
     jest.spyOn(router, 'navigate').mockReturnValue(new Promise(resolve => resolve(true)));
 
     const loginRequest: LoginRequest = {
