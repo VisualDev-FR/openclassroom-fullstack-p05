@@ -48,6 +48,7 @@ describe('LoginComponent', () => {
     router = TestBed.inject(Router);
     sessionService = TestBed.inject(SessionService);
     authService = TestBed.inject(AuthService);
+
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
