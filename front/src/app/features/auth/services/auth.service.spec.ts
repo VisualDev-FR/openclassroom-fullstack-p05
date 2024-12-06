@@ -28,7 +28,7 @@ describe('AuthService', () => {
     expect(authService).toBeTruthy();
   });
 
-  it('should make a POST request to the register URL and return nothing', () => {
+  it('should make a POST request to the register URL and return nothing', (done) => {
 
     const registerRequest: RegisterRequest = {
       email: 'test@example.com',
@@ -38,7 +38,8 @@ describe('AuthService', () => {
     };
 
     authService.register(registerRequest).subscribe(response => {
-      expect(response).toBeUndefined();
+      expect(response).toBeNull();
+      done()
     });
 
     const req = httpController.expectOne('api/auth/register');
