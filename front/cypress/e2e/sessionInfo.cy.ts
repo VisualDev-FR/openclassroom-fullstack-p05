@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 
-describe("", () => {
+describe("Current session features", () => {
 
   const mockSessionInfo = {
     id: 1,
