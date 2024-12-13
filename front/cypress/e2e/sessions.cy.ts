@@ -35,7 +35,7 @@ describe('Session details features', () => {
   beforeEach(() => {
     cy.intercept('GET', '/api/teacher', { body: mockTeacher });
     cy.intercept('GET', '/api/teacher/1', { body: mockTeacher });
-    cy.intercept('GET', '/api/session', { body: [mockSession,] });
+    cy.intercept('GET', '/api/session', { body: [mockSession] });
     cy.intercept('GET', '/api/session/1', { body: mockSession });
     cy.intercept('POST', '/api/auth/login', { body: mockSessionInfo, });
 
@@ -47,6 +47,8 @@ describe('Session details features', () => {
 
   it('should create a new yoga session', () => {
 
+    cy.intercept('POST', '/api/session', { body: mockSession });
+
     cy.url().should('include', '/sessions');
     cy.get("span").contains("Create").click();
     cy.url().should('include', '/sessions/create');
@@ -56,8 +58,9 @@ describe('Session details features', () => {
     cy.get('mat-select').click();
     cy.get('mat-option').first().click();
     cy.get('textarea[formControlName=description]').type("description");
-    cy.get("span").contains("Save").click()
+    cy.get("button[type=submit]").click()
 
+    cy.url().should('not.include', '/sessions/create');
     cy.url().should('include', '/sessions');
   });
 
