@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.openclassrooms.starterjwt.payload.request.LoginRequest;
+import com.openclassrooms.starterjwt.payload.request.SignupRequest;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.hamcrest.Matchers.*;
@@ -60,6 +61,42 @@ public class AuthControllerTest {
                 .content(objectMapper.writeValueAsString(loginRequest)))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().is(401));
+    }
+
+    @Test
+    public void registerSucessfull() throws Exception {
+
+        SignupRequest payload = new SignupRequest();
+        payload.setEmail("user-new@example.com");
+        payload.setPassword("password");
+        payload.setFirstName("firstName");
+        payload.setLastName("lastName");
+
+        mockMvc.perform(MockMvcRequestBuilders
+                .post("/api/auth/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(payload)))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.message", is("User registered successfully!")));
+    }
+
+    @Test
+    public void registerFailIfAlreadyExists() throws Exception {
+
+        SignupRequest payload = new SignupRequest();
+        payload.setEmail("user@example.com");
+        payload.setPassword("password");
+        payload.setFirstName("firstName");
+        payload.setLastName("lastName");
+
+        mockMvc.perform(MockMvcRequestBuilders
+                .post("/api/auth/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(payload)))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message", is("Error: Email is already taken!")));
     }
 
 }
