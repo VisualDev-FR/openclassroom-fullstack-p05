@@ -60,6 +60,14 @@ public class SessionControllerTest {
     }
 
     @Test
+    public void GetSessionByWrongId() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders
+                .get("/api/session/wrong")
+                .header("Authorization", "Bearer " + jwtToken))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
     public void GetUnexistingSessionById() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
                 .get("/api/session/999")
@@ -105,6 +113,14 @@ public class SessionControllerTest {
     }
 
     @Test
+    public void ParticipateSessionWithWrongID() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders
+                .post("/api/session/2/participate/wrong")
+                .header("Authorization", "Bearer " + jwtToken))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
     public void UpdateSession() throws Exception {
 
         SessionDto sessionDto = new SessionDto();
@@ -125,10 +141,60 @@ public class SessionControllerTest {
     }
 
     @Test
+    public void UpdateSessionWithWrongID() throws Exception {
+
+        SessionDto sessionDto = new SessionDto();
+        sessionDto.setId(1L);
+        sessionDto.setName("Updated Session");
+        sessionDto.setDescription("Updated description");
+        sessionDto.setDate(new Date());
+        sessionDto.setTeacher_id(1L);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                .put("/api/session/wrong")
+                .header("Authorization", "Bearer " + jwtToken)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(sessionDto)))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
     public void UnparticipateSession() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
                 .delete("/api/session/1/participate/1")
                 .header("Authorization", "Bearer " + jwtToken))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    public void UnparticipateSessionWithWrongID() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders
+                .delete("/api/session/1/participate/wrong")
+                .header("Authorization", "Bearer " + jwtToken))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void DeleteSessionById() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders
+                .delete("/api/session/1")
+                .header("Authorization", "Bearer " + jwtToken))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void DeleteUnexistingSession() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders
+                .delete("/api/session/999")
+                .header("Authorization", "Bearer " + jwtToken))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void DeleteSessionByWrongId() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders
+                .delete("/api/session/wrong")
+                .header("Authorization", "Bearer " + jwtToken))
+                .andExpect(status().isBadRequest());
     }
 }
