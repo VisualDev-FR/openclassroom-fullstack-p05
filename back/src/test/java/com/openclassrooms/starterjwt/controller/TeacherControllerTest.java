@@ -46,7 +46,7 @@ public class TeacherControllerTest {
     }
 
     @Test
-    void GetTeacherByID() throws Exception {
+    public void GetTeacherByID() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
                 .get("/api/teacher/1")
                 .header("Authorization", "Bearer " + jwtToken))
@@ -57,7 +57,7 @@ public class TeacherControllerTest {
     }
 
     @Test
-    void GetUnexistingTeacher() throws Exception {
+    public void GetUnexistingTeacher() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
                 .get("/api/teacher/999")
                 .header("Authorization", "Bearer " + jwtToken))
@@ -65,7 +65,7 @@ public class TeacherControllerTest {
     }
 
     @Test
-    void GetAllTeacher() throws Exception {
+    public void GetAllTeacher() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
                 .get("/api/teacher")
                 .header("Authorization", "Bearer " + jwtToken))

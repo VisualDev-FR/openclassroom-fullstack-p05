@@ -46,7 +46,7 @@ public class UserControllerTest {
     }
 
     @Test
-    void GetUserByID() throws Exception {
+    public void GetUserByID() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
                 .get("/api/user/1")
                 .header("Authorization", "Bearer " + jwtToken))
@@ -58,7 +58,7 @@ public class UserControllerTest {
     }
 
     @Test
-    void GetAnotherUser() throws Exception {
+    public void GetAnotherUser() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
                 .get("/api/user/999")
                 .header("Authorization", "Bearer " + jwtToken))
@@ -66,7 +66,7 @@ public class UserControllerTest {
     }
 
     @Test
-    void DeleteAnotherUser() throws Exception {
+    public void DeleteAnotherUser() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
                 .delete("/api/user/2")
                 .header("Authorization", "Bearer " + jwtToken))

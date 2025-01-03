@@ -28,7 +28,7 @@ public class SessionServiceTest {
     private SessionService sessionService;
 
     @Test
-    void testGetSessionByID() {
+    public void testGetSessionByID() {
         Session session = sessionService.getById(1L);
         assertNotNull(session);
         assertEquals("Session 1", session.getName());
@@ -49,14 +49,14 @@ public class SessionServiceTest {
     }
 
     @Test
-    void testParticipate() {
+    public void testParticipate() {
         sessionService.participate(2L, 2L);
         Session session = sessionService.getById(2L);
         assertTrue(session.getUsers().contains(userRepository.findById(2L).get()));
     }
 
     @Test
-    void testUnparticipate() {
+    public void testUnparticipate() {
         sessionService.noLongerParticipate(1L, 1L);
         Session session = sessionService.getById(1L);
         assertFalse(session.getUsers().contains(userRepository.findById(1L).get()));

@@ -25,13 +25,13 @@ public class TeacherServiceTest {
     private TeacherService teacherService;
 
     @Test
-    void FindAllTeachers() {
+    public void FindAllTeachers() {
         List<Teacher> teachers = teacherService.findAll();
         assertEquals(2, teachers.size());
     }
 
     @Test
-    void FindTeacherByID() {
+    public void FindTeacherByID() {
         Teacher foundTeacher = teacherService.findById(1L);
 
         assertNotNull(foundTeacher);
@@ -39,7 +39,7 @@ public class TeacherServiceTest {
     }
 
     @Test
-    void TeacherNotFound() {
+    public void TeacherNotFound() {
         Teacher foundTeacher = teacherService.findById(999L);
         assertNull(foundTeacher);
     }

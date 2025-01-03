@@ -60,7 +60,7 @@ public class SessionControllerTest {
     }
 
     @Test
-    void GetUnexistingSessionById() throws Exception {
+    public void GetUnexistingSessionById() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
                 .get("/api/session/999")
                 .header("Authorization", "Bearer " + jwtToken))
@@ -68,7 +68,7 @@ public class SessionControllerTest {
     }
 
     @Test
-    void GetAllSessions() throws Exception {
+    public void GetAllSessions() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
                 .get("/api/session")
                 .header("Authorization", "Bearer " + jwtToken))
@@ -78,7 +78,7 @@ public class SessionControllerTest {
     }
 
     @Test
-    void CreateSession() throws Exception {
+    public void CreateSession() throws Exception {
 
         SessionDto sessionDto = new SessionDto();
         sessionDto.setName("Session3");
@@ -97,7 +97,7 @@ public class SessionControllerTest {
     }
 
     @Test
-    void ParticipateSession() throws Exception {
+    public void ParticipateSession() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
                 .post("/api/session/2/participate/2")
                 .header("Authorization", "Bearer " + jwtToken))
@@ -105,7 +105,7 @@ public class SessionControllerTest {
     }
 
     @Test
-    void UpdateSession() throws Exception {
+    public void UpdateSession() throws Exception {
 
         SessionDto sessionDto = new SessionDto();
         sessionDto.setId(1L);
@@ -125,7 +125,7 @@ public class SessionControllerTest {
     }
 
     @Test
-    void UnparticipateSession() throws Exception {
+    public void UnparticipateSession() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
                 .delete("/api/session/1/participate/1")
                 .header("Authorization", "Bearer " + jwtToken))
