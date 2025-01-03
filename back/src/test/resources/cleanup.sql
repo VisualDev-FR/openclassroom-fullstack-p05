@@ -12,8 +12,8 @@ VALUES ('Margot', 'DELAHAYE'),
        ('Hélène', 'THIERCELIN');
 
 INSERT INTO USERS (first_name, last_name, admin, email, password)
-VALUES ('admin', 'admin', true, 'admin@example.com', '$2a$10$.Hsa/ZjUVaHqi0tp9xieMeewrnZxrZ5pQRzddUXE/WjDu2ZThe6Iq'),
-       ('user', 'user', false, 'user@example.com', '$2a$10$.Hsa/ZjUVaHqi0tp9xieMeewrnZxrZ5pQRzddUXE/WjDu2ZThe6Iq');
+VALUES ('adminFirst', 'adminLast', true, 'admin@example.com', '$2a$10$.Hsa/ZjUVaHqi0tp9xieMeewrnZxrZ5pQRzddUXE/WjDu2ZThe6Iq'),
+       ('userFirst', 'userLast', false, 'user@example.com', '$2a$10$.Hsa/ZjUVaHqi0tp9xieMeewrnZxrZ5pQRzddUXE/WjDu2ZThe6Iq');
 
 INSERT INTO SESSIONS (name, description, date, teacher_id)
 VALUES ('Session 1', 'My description', '2024-12-01 10:00:00', 1),
