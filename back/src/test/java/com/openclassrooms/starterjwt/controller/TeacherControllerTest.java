@@ -57,6 +57,14 @@ public class TeacherControllerTest {
     }
 
     @Test
+    public void GetTeacherByWrongID() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders
+                .get("/api/teacher/wrong")
+                .header("Authorization", "Bearer " + jwtToken))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
     public void GetUnexistingTeacher() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
                 .get("/api/teacher/999")
